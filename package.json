@@ -1,0 +1,24 @@
+{
+  "name": "alexa-brewery-app",
+  "version": "0.0.1",
+  "description": "A brewery Alexa Skill project brewery services API.",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "alexa",
+    "amazon",
+    "echo",
+    "skills"
+  ],
+  "author": "Joseph Slawinski",
+  "license": "MIT",
+  "dependencies": {
+    "alexa-app": "^4.2.3",
+    "debug": "^4.1.1",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4"
+  }
+}
