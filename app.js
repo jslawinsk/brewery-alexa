@@ -31,7 +31,7 @@ app.set('views', './src/views');
 app.set("view engine", "ejs");
 
 alexaApp.launch(function(request, response) {
-  response.say("You launched the app!");
+  response.say("Welcome to Joes Brewery! Curennt process Joe's Irish stout Fermentation tem[pratiure 69.5 degress");
 });
 
 alexaApp.dictionary = { "names": ["matt", "joe", "bob", "bill", "mary", "jane", "dawn"] };
@@ -43,7 +43,7 @@ alexaApp.intent("nameIntent", {
     ]
   },
   function(request, response) {
-    response.say("Success!");
+    response.say("Brewery Success for name intent!");
   }
 );
 
