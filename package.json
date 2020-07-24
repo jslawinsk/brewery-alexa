@@ -4,7 +4,7 @@
   "description": "A brewery Alexa Skill project brewery services API.",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "set DEBUG=app,app:*&node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -19,6 +19,7 @@
     "alexa-app": "^4.2.3",
     "debug": "^4.1.1",
     "ejs": "^2.6.1",
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "axios": "^0.19.2"
   }
 }

@@ -1,11 +1,13 @@
 const express = require("express");
 const debug = require('debug')('app');
 const alexa = require("alexa-app");
+const brewService = require('./src/services/breweryService');
 
-const PORT = process.env.PORT || 8080;
+
+const PORT = process.env.PORT || 8090;
 const app = express();
 
-const alexaApp = new alexa.app("test");
+const alexaApp = new alexa.app("status");
 
 alexaApp.express({
   expressApp: app,
@@ -20,7 +22,7 @@ alexaApp.express({
   // development, but not recommended for production. disabled by default
   debug: true
 });
-// now POST calls to /test in express will be handled by the app.request() function
+// now POST calls to /status in express will be handled by the app.request() function
 
 app.use((req, res, next) => {
   debug('my middleware');
@@ -30,8 +32,47 @@ app.use((req, res, next) => {
 app.set('views', './src/views');
 app.set("view engine", "ejs");
 
-alexaApp.launch(function(request, response) {
-  response.say("Welcome to Joes Brewery! Curennt process Joe's Irish stout Fermentation temprature 69.5 degreasS");
+
+alexaApp.launch( async function(request, response) {
+  debug( 'alexaApp.launch' );
+
+  var responseText = "Welcome to Joes Brewery!";
+  
+    const authData  = await brewService.authenticate();
+    debug( `Brewery authenticate: ${authData.data.token}` );
+
+    const brewdata  = await brewService.getSummaryData( authData.data.token );
+    debug( `Brewery getSummaryData: ${JSON.stringify( brewdata.data )}` );
+
+    var lastId = -1;
+    var lastProcess = "";
+    for(var idx in brewdata.data ){
+      debug( "Last ID: " + lastId + " ID: " + brewdata.data[ idx ].batch.id );
+      if( lastId != brewdata.data[ idx ].batch.id ){
+        responseText = responseText + " Batch, " + brewdata.data[ idx ].batch.name
+          + " Style " + brewdata.data[ idx ].batch.style.name;
+      }
+      if( lastProcess != brewdata.data[ idx ].process.code ){
+        responseText = responseText + ", " + brewdata.data[ idx ].process.name;
+      }
+      responseText = responseText + " " + brewdata.data[ idx ].type.name;
+      if( brewdata.data[ idx ].type.code == "TMP" ){
+        responseText = responseText+ " " + brewdata.data[ idx ].valueNumber + " degrees.";
+      }
+      else{
+        if( brewdata.data[ idx ].valueText == "" ){
+          responseText = responseText+ " " + brewdata.data[ idx ].valueNumber;
+        }
+        else{
+          responseText = responseText+ " " + brewdata.data[ idx ].valueText;
+        }
+      }
+      responseText = responseText + " Measurement Time " + brewdata.data[ idx ].measurementTime;
+      lastId = brewdata.data[ idx ].batch.id;
+      lastProcess = brewdata.data[ idx ].process.code;
+    }
+  debug( responseText );
+  response.say( responseText );
 });
 
 alexaApp.dictionary = { "names": ["matt", "joe", "bob", "bill", "mary", "jane", "dawn"] };
@@ -43,8 +84,11 @@ alexaApp.intent("nameIntent", {
     ]
   },
   function(request, response) {
+    debug( 'alexaApp.intent' );
     response.say("Brewery Success for name intent!");
   }
 );
 
-app.listen(PORT, () => console.log("Listening on port " + PORT + "."));
+app.listen(PORT, () => {
+  debug(`listening on port ${PORT}`);
+});
