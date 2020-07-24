@@ -2,9 +2,9 @@
 const axios = require('axios');
 const debug = require('debug')('app:breweryService');
 
-const apiurl = process.env.apiurl || "http://localhost:8080/api/";
-const apiuser = process.env.apiuser || "API";
-const apipassword = process.env.apipassword || "api";
+const apiurl = process.env.APIURL || "http://localhost:8080/api/";
+const apiuser = process.env.APIUSER || "API";
+const apipassword = process.env.APIPASSWORD || "api";
 
 
 function breweryService() {
