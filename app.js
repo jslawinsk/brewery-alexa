@@ -37,7 +37,7 @@ alexaApp.launch( async function(request, response) {
   debug( 'alexaApp.launch' );
 
   var responseText = "Welcome to Joes Brewery!";
-  
+  /*
     const authData  = await brewService.authenticate();
     debug( `Brewery authenticate: ${authData.data.token}` );
 
@@ -71,6 +71,7 @@ alexaApp.launch( async function(request, response) {
       lastId = brewdata.data[ idx ].batch.id;
       lastProcess = brewdata.data[ idx ].process.code;
     }
+*/    
   debug( responseText );
   response.say( responseText );
 });
