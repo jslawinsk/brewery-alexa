@@ -56,19 +56,22 @@ alexaApp.launch( async function(request, response) {
       if( lastProcess != brewdata.data[ idx ].process.code ){
         responseText = responseText + ", " + brewdata.data[ idx ].process.name;
       }
-      responseText = responseText + " " + brewdata.data[ idx ].type.name;
+      responseText = responseText + ", " + brewdata.data[ idx ].type.name;
       if( brewdata.data[ idx ].type.code == "TMP" ){
-        responseText = responseText+ " " + brewdata.data[ idx ].valueNumber + " degrees.";
+        responseText = responseText+ ", " + brewdata.data[ idx ].valueNumber + " degrees.";
+      }
+      else if( brewdata.data[ idx ].type.code == "PH" ){
+        responseText = responseText+ ", " + brewdata.data[ idx ].valueNumber;
       }
       else{
         if( brewdata.data[ idx ].valueText == "" ){
-          responseText = responseText+ " " + brewdata.data[ idx ].valueNumber;
+          responseText = responseText+ ", " + brewdata.data[ idx ].valueNumber;
         }
         else{
-          responseText = responseText+ " " + brewdata.data[ idx ].valueText;
+          responseText = responseText+ ", " + brewdata.data[ idx ].valueText;
         }
       }
-      responseText = responseText + " Measurement Time " + brewdata.data[ idx ].measurementTime;
+      responseText = responseText + ", Measurement Time " + brewdata.data[ idx ].measurementTime;
       lastId = brewdata.data[ idx ].batch.id;
       lastProcess = brewdata.data[ idx ].process.code;
     }

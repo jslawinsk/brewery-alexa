@@ -8,4 +8,4 @@ npm install
 npm start
 
 # Test
-http://localhost:8080/test
+http://localhost:8080/status
