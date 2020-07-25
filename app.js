@@ -40,12 +40,12 @@ app.set("view engine", "ejs");
 alexaApp.launch( async function(request, response) {
   debug( 'alexaApp.launch' );
 
-  var responseText = `Welcome to Joes Brewery! Port + ${PORT}, API ${apiurl}, User ${apiuser}, secret ${apipassword}`;
+  var responseText = `Welcome to Joes Brewery! API ${apiurl}, User ${apiuser}`;
   
-/*    const authData  = await brewService.authenticate();
+    const authData  = await brewService.authenticate();
     debug( `Brewery authenticate: ${authData.data.token}` );
 
-    const brewdata  = await brewService.getSummaryData( authData.data.token );
+/*    const brewdata  = await brewService.getSummaryData( authData.data.token );
     debug( `Brewery getSummaryData: ${JSON.stringify( brewdata.data )}` );
 
     var lastId = -1;
