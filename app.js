@@ -5,9 +5,6 @@ const brewService = require('./src/services/breweryService');
 
 
 const PORT = process.env.PORT || 8090;
-const apiurl = process.env.APIURL || "http://localhost:8080/api/";
-const apiuser = process.env.APIUSER || "API";
-const apipassword = process.env.APIPASSWORD || "api";
 
 const app = express();
 
@@ -40,12 +37,12 @@ app.set("view engine", "ejs");
 alexaApp.launch( async function(request, response) {
   debug( 'alexaApp.launch' );
 
-  var responseText = `Welcome to Joes Brewery! API ${apiurl}, User ${apiuser}`;
+  var responseText = `Welcome to Joes Brewery!`;
   
     const authData  = await brewService.authenticate();
     debug( `Brewery authenticate: ${authData.data.token}` );
 
-/*    const brewdata  = await brewService.getSummaryData( authData.data.token );
+    const brewdata  = await brewService.getSummaryData( authData.data.token );
     debug( `Brewery getSummaryData: ${JSON.stringify( brewdata.data )}` );
 
     var lastId = -1;
@@ -75,7 +72,7 @@ alexaApp.launch( async function(request, response) {
       lastId = brewdata.data[ idx ].batch.id;
       lastProcess = brewdata.data[ idx ].process.code;
     }
-*/    
+    
   debug( responseText );
   response.say( responseText );
 });
