@@ -51,7 +51,7 @@ alexaApp.launch( async function(request, response) {
       debug( "Last ID: " + lastId + " ID: " + brewdata.data[ idx ].batch.id );
       if( lastId != brewdata.data[ idx ].batch.id ){
         responseText = responseText + " Batch, " + brewdata.data[ idx ].batch.name
-          + " Style " + brewdata.data[ idx ].batch.style.name;
+          + ", Style, " + brewdata.data[ idx ].batch.style.name;
       }
       if( lastProcess != brewdata.data[ idx ].process.code ){
         responseText = responseText + ", " + brewdata.data[ idx ].process.name;
@@ -71,7 +71,7 @@ alexaApp.launch( async function(request, response) {
           responseText = responseText+ ", " + brewdata.data[ idx ].valueText;
         }
       }
-      responseText = responseText + ", Measurement Time " + brewdata.data[ idx ].measurementTime;
+      responseText = responseText + ", Measurement Time, " + brewdata.data[ idx ].measurementTime.substring( 0, 16 );
       lastId = brewdata.data[ idx ].batch.id;
       lastProcess = brewdata.data[ idx ].process.code;
     }
