@@ -6,6 +6,8 @@ const brewService = require('./src/services/breweryService');
 
 const PORT = process.env.PORT || 8090;
 const apiurl = process.env.APIURL || "http://localhost:8080/api/";
+const apiuser = process.env.APIUSER || "API";
+const apipassword = process.env.APIPASSWORD || "api";
 
 const app = express();
 
@@ -38,7 +40,7 @@ app.set("view engine", "ejs");
 alexaApp.launch( async function(request, response) {
   debug( 'alexaApp.launch' );
 
-  var responseText = `Welcome to Joes Brewery! Port + ${PORT}, API ${apiurl}`;
+  var responseText = `Welcome to Joes Brewery! Port + ${PORT}, API ${apiurl}, User ${apiuser}, secret ${apipassword}`;
   
 /*    const authData  = await brewService.authenticate();
     debug( `Brewery authenticate: ${authData.data.token}` );
