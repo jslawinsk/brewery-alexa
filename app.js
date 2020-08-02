@@ -54,26 +54,28 @@ alexaApp.launch( async function(request, response) {
         responseText = responseText + " Batch, " + brewdata.data[ idx ].batch.name
           + ", Style, " + brewdata.data[ idx ].batch.style.name;
       }
-      if( lastProcess != brewdata.data[ idx ].process.code ){
-        responseText = responseText + ", " + brewdata.data[ idx ].process.name;
-      }
-      responseText = responseText + ", " + brewdata.data[ idx ].type.name;
-      if( brewdata.data[ idx ].type.code == "TMP" ){
-        responseText = responseText+ ", " + brewdata.data[ idx ].valueNumber + " degrees.";
-      }
-      else if( brewdata.data[ idx ].type.code == "PH" ){
-        responseText = responseText+ ", " + brewdata.data[ idx ].valueNumber;
-      }
-      else{
-        if( brewdata.data[ idx ].valueText == "" ){
+      if( brewdata.data[ idx ].process.voiceAssist == true && brewdata.data[ idx ].type.voiceAssist == true ){
+        if( lastProcess != brewdata.data[ idx ].process.code ){
+          responseText = responseText + ", " + brewdata.data[ idx ].process.name;
+        }
+        responseText = responseText + ", " + brewdata.data[ idx ].type.name;
+        if( brewdata.data[ idx ].type.code == "TMP" ){
+          responseText = responseText+ ", " + brewdata.data[ idx ].valueNumber + " degrees.";
+        }
+        else if( brewdata.data[ idx ].type.code == "PH" ){
           responseText = responseText+ ", " + brewdata.data[ idx ].valueNumber;
         }
         else{
-          responseText = responseText+ ", " + brewdata.data[ idx ].valueText;
+          if( brewdata.data[ idx ].valueText == "" ){
+            responseText = responseText+ ", " + brewdata.data[ idx ].valueNumber;
+          }
+          else{
+            responseText = responseText+ ", " + brewdata.data[ idx ].valueText;
+          }
         }
+        responseText = responseText + ", On, <say-as interpret-as='date'>????" + brewdata.data[ idx ].measurementTime.substring( 5, 7 ) + brewdata.data[ idx ].measurementTime.substring( 8, 10 ) + "</say-as>";
+        responseText = responseText + ", at, <say-as interpret-as='time'>" + brewdata.data[ idx ].measurementTime.substring( 11, 16 ) + "</say-as>";
       }
-      responseText = responseText + ", On, <say-as interpret-as='date'>????" + brewdata.data[ idx ].measurementTime.substring( 5, 7 ) + brewdata.data[ idx ].measurementTime.substring( 8, 10 ) + "</say-as>";
-      responseText = responseText + ", at, <say-as interpret-as='time'>" + brewdata.data[ idx ].measurementTime.substring( 11, 16 ) + "</say-as>";
       lastId = brewdata.data[ idx ].batch.id;
       lastProcess = brewdata.data[ idx ].process.code;
     }
