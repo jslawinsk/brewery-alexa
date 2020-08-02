@@ -50,6 +50,7 @@ alexaApp.launch( async function(request, response) {
     for(var idx in brewdata.data ){
       debug( "Last ID: " + lastId + " ID: " + brewdata.data[ idx ].batch.id );
       if( lastId != brewdata.data[ idx ].batch.id ){
+        responseText = responseText + "<break strength='x-strong'/>"
         responseText = responseText + " Batch, " + brewdata.data[ idx ].batch.name
           + ", Style, " + brewdata.data[ idx ].batch.style.name;
       }
@@ -71,7 +72,8 @@ alexaApp.launch( async function(request, response) {
           responseText = responseText+ ", " + brewdata.data[ idx ].valueText;
         }
       }
-      responseText = responseText + ", Measurement Time, " + brewdata.data[ idx ].measurementTime.substring( 0, 16 );
+      responseText = responseText + ", On, <say-as interpret-as='date'>????" + brewdata.data[ idx ].measurementTime.substring( 5, 7 ) + brewdata.data[ idx ].measurementTime.substring( 8, 10 ) + "</say-as>";
+      responseText = responseText + ", at, <say-as interpret-as='time'>" + brewdata.data[ idx ].measurementTime.substring( 11, 16 ) + "</say-as>";
       lastId = brewdata.data[ idx ].batch.id;
       lastProcess = brewdata.data[ idx ].process.code;
     }
