@@ -97,13 +97,11 @@ alexaApp.launch( async function(request, response) {
   response.card = ( { 
     type: "Simple",
     title: "My Brewery", // this is not required for type Simple or Standard
-    text: cardText,
-//    image: { // image is optional
-//      smallImageUrl: "https://carfu.com/resources/card-images/race-car-small.png", // required
-//      largeImageUrl: "https://carfu.com/resources/card-images/race-car-large.png"
-//    }
+    text: cardText
   });
   response.say( responseText );
+  debug( `response:  +  ${JSON.stringify(response)}` );
+  return response;
 });
 
 alexaApp.dictionary = { "names": ["matt", "joe", "bob", "bill", "mary", "jane", "dawn"] };
