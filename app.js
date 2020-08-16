@@ -94,7 +94,7 @@ alexaApp.launch( async function(request, response) {
   debug( responseText );
   debug( "card: " + cardText );
   response.say( responseText );
-  response.response.card = ( { 
+  response.response.response.card = ( { 
     type: "Simple",
     title: "My Brewery", // this is not required for type Simple or Standard
     text: cardText
