@@ -44,12 +44,11 @@ alexaApp.launch( async function(request, response) {
     debug( `Brewery authenticate: ${authData.data.token}` );
 
     const brewdata  = await brewService.getSummaryData( authData.data.token );
-    debug( `Brewery getSummaryData: ${JSON.stringify( brewdata.data )}` );
+    // debug( `Brewery getSummaryData: ${JSON.stringify( brewdata.data )}` );
 
     var lastId = -1;
     var lastProcess = "";
     for(var idx in brewdata.data ){
-      debug( "Last ID: " + lastId + " ID: " + brewdata.data[ idx ].batch.id );
       if( lastId != brewdata.data[ idx ].batch.id ){
         responseText = responseText + "<break strength='x-strong'/>"
         responseText = responseText + " Batch, " + brewdata.data[ idx ].batch.name
@@ -94,14 +93,13 @@ alexaApp.launch( async function(request, response) {
     
   debug( responseText );
   debug( "card: " + cardText );
-  response.card = ( { 
+  response.say( responseText );
+  response.response.card = ( { 
     type: "Simple",
     title: "My Brewery", // this is not required for type Simple or Standard
     text: cardText
   });
-  response.say( responseText );
-  debug( `response:  +  ${JSON.stringify(response)}` );
-  return response;
+  debug( `response: ${JSON.stringify(response)}` );
 });
 
 alexaApp.dictionary = { "names": ["matt", "joe", "bob", "bill", "mary", "jane", "dawn"] };
