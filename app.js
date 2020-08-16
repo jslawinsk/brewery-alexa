@@ -38,6 +38,7 @@ alexaApp.launch( async function(request, response) {
   debug( 'alexaApp.launch' );
 
   var responseText = `Welcome to Joes Brewery!`;
+  var cardText = "Joes Brewery";
   
     const authData  = await brewService.authenticate();
     debug( `Brewery authenticate: ${authData.data.token}` );
@@ -53,34 +54,55 @@ alexaApp.launch( async function(request, response) {
         responseText = responseText + "<break strength='x-strong'/>"
         responseText = responseText + " Batch, " + brewdata.data[ idx ].batch.name
           + ", Style, " + brewdata.data[ idx ].batch.style.name;
+          cardText = cardText + "\n\nBatch: " + brewdata.data[ idx ].batch.name 
+            + "\n  Style:  " + brewdata.data[ idx ].batch.style.name + "\n";
       }
-      if( brewdata.data[ idx ].process.voiceAssist == true && brewdata.data[ idx ].type.voiceAssist == true ){
+      if( brewdata.data[ idx ].process.voiceAssist == true ){
         if( lastProcess != brewdata.data[ idx ].process.code ){
           responseText = responseText + ", " + brewdata.data[ idx ].process.name;
+          cardText = cardText + "  Process: " + brewdata.data[ idx ].process.name;
         }
+      }
+      if( brewdata.data[ idx ].process.voiceAssist == true && brewdata.data[ idx ].type.voiceAssist == true ){
         responseText = responseText + ", " + brewdata.data[ idx ].type.name;
+        cardText = cardText + "\n    " + brewdata.data[ idx ].type.name + ": ";
         if( brewdata.data[ idx ].type.code == "TMP" ){
           responseText = responseText+ ", " + brewdata.data[ idx ].valueNumber + " degrees.";
+          cardText = cardText + brewdata.data[ idx ].valueNumber + " degrees.";
         }
         else if( brewdata.data[ idx ].type.code == "PH" ){
           responseText = responseText+ ", " + brewdata.data[ idx ].valueNumber;
+          cardText = cardText + brewdata.data[ idx ].valueNumber;
         }
         else{
           if( brewdata.data[ idx ].valueText == "" ){
             responseText = responseText+ ", " + brewdata.data[ idx ].valueNumber;
+            cardText = cardText + brewdata.data[ idx ].valueNumber;
           }
           else{
             responseText = responseText+ ", " + brewdata.data[ idx ].valueText;
+            cardText = cardText + brewdata.data[ idx ].valueText;
           }
         }
         responseText = responseText + ", On, <say-as interpret-as='date'>????" + brewdata.data[ idx ].measurementTime.substring( 5, 7 ) + brewdata.data[ idx ].measurementTime.substring( 8, 10 ) + "</say-as>";
         responseText = responseText + ", at, <say-as interpret-as='time'>" + brewdata.data[ idx ].measurementTime.substring( 11, 16 ) + "</say-as>";
+        cardText = cardText + " " + brewdata.data[ idx ].measurementTime;
       }
       lastId = brewdata.data[ idx ].batch.id;
       lastProcess = brewdata.data[ idx ].process.code;
     }
     
   debug( responseText );
+  debug( "card: " + cardText );
+  response.card = ( { 
+    type: "Simple",
+    title: "My Brewery", // this is not required for type Simple or Standard
+    text: cardText,
+//    image: { // image is optional
+//      smallImageUrl: "https://carfu.com/resources/card-images/race-car-small.png", // required
+//      largeImageUrl: "https://carfu.com/resources/card-images/race-car-large.png"
+//    }
+  });
   response.say( responseText );
 });
 
