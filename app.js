@@ -38,7 +38,7 @@ alexaApp.launch( async function(request, response) {
   debug( 'alexaApp.launch' );
 
   var responseText = `Welcome to Joes Brewery!`;
-  var cardText = "Joes Brewery";
+  var cardText = "";
   
     const authData  = await brewService.authenticate();
     debug( `Brewery authenticate: ${authData.data.token}` );
@@ -84,8 +84,8 @@ alexaApp.launch( async function(request, response) {
             cardText = cardText + brewdata.data[ idx ].valueText;
           }
         }
-        responseText = responseText + ", On, <say-as interpret-as='date'>????" + brewdata.data[ idx ].measurementTime.substring( 5, 7 ) + brewdata.data[ idx ].measurementTime.substring( 8, 10 ) + "</say-as>";
-        responseText = responseText + ", at, <say-as interpret-as='time'>" + brewdata.data[ idx ].measurementTime.substring( 11, 16 ) + "</say-as>";
+        responseText = responseText + ", On <say-as interpret-as='date'>????" + brewdata.data[ idx ].measurementTime.substring( 5, 7 ) + brewdata.data[ idx ].measurementTime.substring( 8, 10 ) + "</say-as>";
+        responseText = responseText + " at <say-as interpret-as='time'>" + brewdata.data[ idx ].measurementTime.substring( 11, 16 ) + "</say-as>";
         cardText = cardText + " " + brewdata.data[ idx ].measurementTime;
       }
       lastId = brewdata.data[ idx ].batch.id;
@@ -97,7 +97,7 @@ alexaApp.launch( async function(request, response) {
   response.say( responseText );
   response.response.response.card = ( { 
     type: "Simple",
-    title: "Summary", // this is not required for type Simple or Standard
+    title: "Joe's Brewery Summary", // this is not required for type Simple or Standard
     content: cardText
   });
   debug( `response: ${JSON.stringify(response)}` );
