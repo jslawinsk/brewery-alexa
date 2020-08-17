@@ -53,8 +53,9 @@ alexaApp.launch( async function(request, response) {
         responseText = responseText + "<break strength='x-strong'/>"
         responseText = responseText + " Batch, " + brewdata.data[ idx ].batch.name
           + ", Style, " + brewdata.data[ idx ].batch.style.name;
-          cardText = cardText + "\n\nBatch: " + brewdata.data[ idx ].batch.name 
-            + "\n  Style:  " + brewdata.data[ idx ].batch.style.name + "\n";
+        cardText = cardText + "\n\nBatch: " + brewdata.data[ idx ].batch.name 
+          + "\n  Style:  " + brewdata.data[ idx ].batch.style.name + "\n";
+        lastProcess = "";
       }
       if( brewdata.data[ idx ].process.voiceAssist == true ){
         if( lastProcess != brewdata.data[ idx ].process.code ){
