@@ -123,7 +123,7 @@ alexaApp.intent("batchIdIntent", {
       "batch numbers", "tellme batch numbers", "for batch numbers"
     ]
   },
-  function(request, response) {
+  async function(request, response) {
     debug( 'alexaApp.batchIdIntent' );
     var responseText = `Active Batch Ids,`;
     var cardText = "";
