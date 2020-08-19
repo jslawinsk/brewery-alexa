@@ -136,7 +136,7 @@ alexaApp.intent("batchIdIntent", {
     for(var idx in brewdata.data ){
       responseText = responseText + "<break strength='x-strong'/>"
       responseText = responseText + " Batch, " + brewdata.data[ idx ].batch.name
-        + ", ID, " + brewdata.data[ idx ].batch.id;
+        + ", ID, <say-as interpret-as='spell-out'>" + brewdata.data[ idx ].batch.id + "</say-as>";
       cardText = cardText + "\n\nBatch: " + brewdata.data[ idx ].batch.name 
         + "\n  ID:  " + brewdata.data[ idx ].batch.id;
     }
