@@ -133,12 +133,16 @@ alexaApp.intent("batchIdIntent", {
   
     const brewdata  = await brewService.getSummaryData( authData.data.token );
   
+    var lastId = -1;
     for(var idx in brewdata.data ){
-      responseText = responseText + "<break strength='x-strong'/>"
-      responseText = responseText + " Batch, " + brewdata.data[ idx ].batch.name
-        + ", ID, <say-as interpret-as='spell-out'>" + brewdata.data[ idx ].batch.id + "</say-as>";
-      cardText = cardText + "\n\nBatch: " + brewdata.data[ idx ].batch.name 
-        + "\n  ID:  " + brewdata.data[ idx ].batch.id;
+      if( lastId != brewdata.data[ idx ].batch.id ){
+        responseText = responseText + "<break strength='x-strong'/>"
+        responseText = responseText + " Batch, " + brewdata.data[ idx ].batch.name
+          + ", ID, <say-as interpret-as='spell-out'>" + brewdata.data[ idx ].batch.id + "</say-as>";
+        cardText = cardText + "\n\nBatch: " + brewdata.data[ idx ].batch.name 
+          + "\n  ID:  " + brewdata.data[ idx ].batch.id;
+      }
+      lastId = brewdata.data[ idx ].batch.id;
     }
       
     debug( responseText );
