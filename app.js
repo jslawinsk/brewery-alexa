@@ -117,6 +117,43 @@ alexaApp.intent("nameIntent", {
   }
 );
 
+alexaApp.intent("batchIdIntent", {
+    "utterances": [
+      "batch ids", "tellme batch ids", "for batch ids",
+      "batch numbers", "tellme batch numbers", "for batch numbers"
+    ]
+  },
+  function(request, response) {
+    debug( 'alexaApp.batchIdIntent' );
+    var responseText = `Active Batch Ids,`;
+    var cardText = "";
+    
+    const authData  = await brewService.authenticate();
+    debug( `Brewery authenticate: ${authData.data.token}` );
+  
+    const brewdata  = await brewService.getSummaryData( authData.data.token );
+  
+    for(var idx in brewdata.data ){
+      responseText = responseText + "<break strength='x-strong'/>"
+      responseText = responseText + " Batch, " + brewdata.data[ idx ].batch.name
+        + ", ID, " + brewdata.data[ idx ].batch.id;
+      cardText = cardText + "\n\nBatch: " + brewdata.data[ idx ].batch.name 
+        + "\n  ID:  " + brewdata.data[ idx ].batch.id;
+    }
+      
+    debug( responseText );
+    debug( "card: " + cardText );
+    response.say( responseText );
+    response.response.response.card = ( { 
+      type: "Simple",
+      title: "Joe's Brewery Batch Ids", // this is not required for type Simple or Standard
+      content: cardText
+    });
+    debug( `response: ${JSON.stringify(response)}` );
+  
+  }
+);
+
 app.listen(PORT, () => {
   debug(`listening on port ${PORT}`);
 });
