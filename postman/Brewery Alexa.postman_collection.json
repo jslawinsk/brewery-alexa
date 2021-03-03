@@ -1,0 +1,38 @@
+{
+	"info": {
+		"_postman_id": "288f29a6-6dc8-4373-a5fe-134b63ea9272",
+		"name": "Brewery Alexa",
+		"description": "Brewery Alexa Aplication testing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8090/status",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n    \"version\": \"1.0\",\r\n    \"session\": {\r\n      \"new\": true,\r\n      \"sessionId\": \"amzn1.echo-api.session.1234\",\r\n      \"application\": {\r\n        \"applicationId\": \"amzn1.ask.skill.brewery-alexa\"\r\n      },\r\n      \"user\": {\r\n        \"userId\": \"amzn1.ask.account.test\"\r\n      },\r\n      \"attributes\": {}\r\n    },\r\n    \"context\": {\r\n      \"AudioPlayer\": {\r\n        \"playerActivity\": \"IDLE\"\r\n      },\r\n      \"System\": {\r\n        \"application\": {\r\n          \"applicationId\": \"test\"\r\n        },\r\n        \"user\": {\r\n          \"userId\": \"amzn1.ask.account.test\"\r\n        },\r\n        \"device\": {\r\n          \"supportedInterfaces\": {\r\n            \"AudioPlayer\": {}\r\n          }\r\n        }\r\n      }\r\n    },\r\n    \"request\": {\r\n      \"type\": \"LaunchRequest\",\r\n      \"requestId\": \"amzn1.echo-api.request.123\",\r\n      \"timestamp\": \"2020-03-22T17:24:44Z\",\r\n      \"locale\": \"en-US\"\r\n    }\r\n  }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/status",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"status"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
