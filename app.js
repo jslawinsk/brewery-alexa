@@ -125,7 +125,7 @@ alexaApp.intent("batchIdIntent", {
   },
   async function(request, response) {
     debug( 'alexaApp.batchIdIntent' );
-    var responseText = `Active Batch Ids,`;
+    var responseText = `Active Batch IDs,`;
     var cardText = "";
     
     const authData  = await brewService.authenticate();
